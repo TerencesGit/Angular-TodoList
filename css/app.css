@@ -1,0 +1,18 @@
+	
+	body.container{
+		max-width: 600px
+	}
+	h1{
+		margin: 30px 0;
+		text-align: center
+	}
+	.checkbox{
+		margin-bottom: 0;
+		margin-right: 20px
+	}
+	.done{
+		color: #ccc
+	}
+	.done .text{
+		text-decoration: line-through
+	}
