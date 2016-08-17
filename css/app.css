@@ -16,3 +16,6 @@
 	.done .text{
 		text-decoration: line-through
 	}
+	a:link{
+		text-decoration: none
+	}
