@@ -6,10 +6,9 @@
             $scope.todoList = [];
             for (var i = 0, len = localStorage.length; i < len; i++) {
                 var key = localStorage.key(i);
-                var value = localStorage.getItem(key);
                 (function(val) {
                     $scope.todoList.push({ text: val });
-                })(value)
+                })(key)
             }
             $scope.add = function() {
                 var text = $scope.text.trim();
@@ -18,7 +17,7 @@
                         text: text,
                         done: false
                     });
-                    localStorage.setItem(new Date().getTime(), text)
+                    localStorage.setItem(text,new Date().getTime())
                     $scope.text = '';
                 }
             }
