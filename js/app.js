@@ -1,7 +1,7 @@
 (function(window) {
-    window.angular.module('TodoApp', []);
-    window.angular.module('TodoApp')
-        .controller('mainController', ['$scope', function($scope) {
+    var app = window.angular.module('TodoApp', []);
+    app.controller('mainController', ['$scope', function($scope) {
+            $scope.title='任务列表';
             $scope.text = '';
             $scope.todoList = [];
             for (var i = 0, len = localStorage.length; i < len; i++) {
