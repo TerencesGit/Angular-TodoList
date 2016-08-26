@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TodoApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Angular - TodoList</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <!--  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css"> -->
+    <style>
+    body.container {
+        max-width: 600px
+    }
+    
+    h1 {
+        margin: 30px 0;
+        text-align: center;
+        font-size: 5rem
+    }
+    
+    .list-group {
+        margin-top: 2rem
+    }
+    
+    .checkbox {
+        margin-bottom: 0;
+        margin-right: 20px
+    }
+    
+    .close {
+        margin-top: 7px
+    }
+    
+    .done {
+        color: #ccc
+    }
+    
+    .done .text {
+        text-decoration: line-through
+    }
+    
+    a:link {
+        text-decoration: none
+    }
+    </style>
+</head>
+
+<body class="container" ng-controller="mainController">
+    <header>
+        <h1 class="display-4" ng-bind='title'><h1>
+	</header>
+	<hr>
+	<section>
+		<form class="input-group input-group-lg">
+			<input type="text" class="form-control" ng-model="text">
+			<span class="input-group-btn">
+				<button class="btn btn-secondary" ng-click="add()">添加</button>
+			</span>
+		</form>
+		<ul class="list-group m-y-2">
+			<li class="list-group-item" 
+			ng-class="{'done':item.done}" ng-repeat="item in todoList">
+				<button class="close" aria-label="Close" ng-click="delete(item)">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="item.done">
+						<span class="text" ng-bind="item.text"></span>
+					</label>
+				</div>
+			</li>
+		</ul>
+		<p>
+			总共<strong>{{todoList.length}}</strong>个任务，已完成<strong>{{doneCount()}}</strong>个任务    &nbsp;       
+			<a href="javascript:;" ng-click="clear()">清空列表</a>
+		</p>
+	</section>
+	<!-- <script src="node_modules/angular/angular.js"></script> -->
+	<!-- <script src="js/app.js"></script>
+ -->
+	<script>
+		(function(window) {
+    var app = window.angular.module('TodoApp', []);
+    app.controller('mainController', ['$scope', function($scope) {
+            $scope.title='任务列表';
+            $scope.text = '';
+            $scope.todoList = [];
+            for (var i = 0, len = localStorage.length; i < len; i++) {
+                var key = localStorage.key(i);
+                (function(val) {
+                    $scope.todoList.push({ text: val });
+                })(key)
+            }
+            $scope.add = function() {
+                var text = $scope.text.trim();
+                if (text) {
+                    $scope.todoList.unshift({
+                        text: text,
+                        done: false
+                    });
+                    localStorage.setItem(text,new Date().getTime())
+                    $scope.text = '';
+                }
+            }
+            $scope.delete = function(todo) {
+                var index = $scope.todoList.indexOf(todo);
+                $scope.todoList.splice(index, 1);
+                localStorage.removeItem(todo.text);
+            }
+            $scope.clear = function(){
+                $scope.todoList.splice(0,$scope.todoList.length);
+                localStorage.clear();
+            }
+            $scope.doneCount = function() {
+                var temp = $scope.todoList.filter(function(item) {
+                    return item.done;
+                })
+                return temp.length;
+            }
+        }]);
+    })(window)
+	</script>
+</body>
+</html>
