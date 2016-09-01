@@ -1,16 +1,8 @@
 (function(window) {
-    var app = window.angular.module('TodoApp', []);
+    var app = angular.module('TodoApp', []);
     app.controller('mainController', ['$scope', function($scope) {
-            $scope.text = '';
             var data = JSON.parse(localStorage.getItem('todos'));
             $scope.todoList = data || [];
-            // $scope.todoList = $scope.todoList.map(function(todo){
-            //     return {
-            //         text: todo.text,
-            //         done: todo.done,
-            //         edti: false
-            //     }
-            // })
             var saveTodo = function(){
                 var todos = $scope.todoList.map(function(todo){
                     return {
@@ -26,16 +18,18 @@
                     $scope.todoList.unshift({
                         text: text,
                         done: false
-                    });
-                    saveTodo();
-                    $scope.text = '';
+                    })
+                    saveTodo()
+                    $scope.text = ""
                 }
             }
             $scope.doneTodo =function(todo){
-                saveTodo();
+                saveTodo()
             }
             $scope.editTodo =function(todo){
-                $scope.todoList.forEach((todo) => { todo.edit = false });
+                $scope.todoList.forEach(function(todo){ 
+                    todo.edit = false 
+                })
                 todo.edit = true
             }
             $scope.updateTodo =function(todo){
@@ -49,26 +43,26 @@
                 var index = $scope.todoList.indexOf(todo);
                 $scope.todoList.splice(index, 1);
                 console.log(index)
-                saveTodo();
-            }
-            $scope.removeAll = function(){
-                $scope.todoList.splice(0, $scope.todoList.length);
-                saveTodo();
-            }
-            $scope.removeCompele = function() {
-                doneList = $scope.todoList.filter(function(item) {
-                    return item.done;
+                saveTodo()
+            }        
+            $scope.removeDone = function() {
+                var doneList = $scope.todoList.filter(function(item) {
+                    return item.done
                 })
                 for(var i = 0;i < doneList.length; i++){
                     $scope.todoList.splice($scope.todoList.indexOf(doneList[i]), 1)
                 }
                 saveTodo()
             }
+            $scope.removeAll = function(){
+                $scope.todoList.splice(0, $scope.todoList.length);
+                saveTodo()
+            }
             $scope.doneCount = function() {
                 var dones = $scope.todoList.filter(function(item) {
-                    return item.done;
+                    return item.done
                 })
-                return dones.length;
+                return dones.length
             }
         }]);
 })(window)
