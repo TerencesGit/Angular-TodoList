@@ -1,7 +1,6 @@
 (function(window) {
     var app = window.angular.module('TodoApp', []);
     app.controller('mainController', ['$scope', function($scope) {
-            $scope.title='任务列表';
             $scope.text = '';
             var data = JSON.parse(localStorage.getItem('todos'));
             $scope.todoList = data || [];
@@ -46,13 +45,24 @@
                     todo.edit = false
                 }  
             }
-            $scope.removeTodo = function(index) {
+            $scope.removeTodo = function(todo) {
+                var index = $scope.todoList.indexOf(todo);
                 $scope.todoList.splice(index, 1);
+                console.log(index)
                 saveTodo();
             }
             $scope.removeAll = function(){
                 $scope.todoList.splice(0, $scope.todoList.length);
                 saveTodo();
+            }
+            $scope.removeCompele = function() {
+                doneList = $scope.todoList.filter(function(item) {
+                    return item.done;
+                })
+                for(var i = 0;i < doneList.length; i++){
+                    $scope.todoList.splice($scope.todoList.indexOf(doneList[i]), 1)
+                }
+                saveTodo()
             }
             $scope.doneCount = function() {
                 var dones = $scope.todoList.filter(function(item) {
