@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" href="css/app.css">
 </head>
-<body class="container" ng-controller="mainController">
+<body class="container" ng-controller="mainController" ng-cloak>
 	<header>
 		<h1 class="display-4" ng-bind='title'><h1>
 	</header>
@@ -15,27 +15,30 @@
 		<form class="input-group nput-group-lg">
 			<input type="text" class="form-control" ng-model="text">
 			<span class="input-group-btn">
-				<button class="btn btn-secondary" ng-click="add()">添加</button>
+				<button class="btn btn-secondary" ng-click="addTodo()">添加</button>
 			</span>
 		</form>
 		<ul class="list-group m-y-2">
 			<li class="list-group-item" 
 			ng-class="{'done':item.done}" ng-repeat="item in todoList">
-				<button class="close" aria-label="Close" ng-click="delete(item)">
+				<button class="close" aria-label="Close" ng-click="removeTodo(item)">
 					<span aria-hidden="true">&times;</span>
-					<span class="sr-only">Close</span>
+					<!-- <span class="sr-only">Close</span> -->
 				</button>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" ng-model="item.done">
-						<span class="text" ng-bind="item.text"></span>
+						<input type="checkbox" ng-model="item.done" ng-change="doneTodo(todo)">
 					</label>
+					<span class="text" ng-bind="item.text" ng-dblclick="editTodo(item)" ng-hide="item.edit"></span>
+					<form ng-submit="updateTodo(item)">
+						<input type="text" class="form-control" value={{item.text}} ng-show=item.edit ng-model="item.text">
+					</form>
 				</div>
 			</li>
 		</ul>
 		<p>
 			总共<strong>{{todoList.length}}</strong>个任务，已完成<strong>{{doneCount()}}</strong>个任务    &nbsp;       
-			<a href="javascript:;" ng-click="clear()">清空列表</a>
+			<a href="javascript:;" ng-click="removeAll()">清空列表</a>
 		</p>
 	</section>
 	<script src="node_modules/angular/angular.js"></script>

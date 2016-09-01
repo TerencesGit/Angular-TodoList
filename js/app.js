@@ -3,38 +3,62 @@
     app.controller('mainController', ['$scope', function($scope) {
             $scope.title='任务列表';
             $scope.text = '';
-            $scope.todoList = [];
-            for (var i = 0, len = localStorage.length; i < len; i++) {
-                var key = localStorage.key(i);
-                (function(val) {
-                    $scope.todoList.push({ text: val });
-                })(key)
+            var data = JSON.parse(localStorage.getItem('todos'));
+            $scope.todoList = data || [];
+            // $scope.todoList = $scope.todoList.map(function(todo){
+            //     return {
+            //         text: todo.text,
+            //         done: todo.done,
+            //         edti: false
+            //     }
+            // })
+            var saveTodo = function(){
+                var todos = $scope.todoList.map(function(todo){
+                    return {
+                        text: todo.text,
+                        done: todo.done
+                    }
+                })
+                localStorage.setItem('todos',JSON.stringify(todos))    
             }
-            $scope.add = function() {
+            $scope.addTodo = function() {
                 var text = $scope.text.trim();
                 if (text) {
                     $scope.todoList.unshift({
                         text: text,
                         done: false
                     });
-                    localStorage.setItem(text,new Date().getTime())
+                    saveTodo();
                     $scope.text = '';
                 }
             }
-            $scope.delete = function(todo) {
-                var index = $scope.todoList.indexOf(todo);
-                $scope.todoList.splice(index, 1);
-                localStorage.removeItem(todo.text);
+            $scope.doneTodo =function(todo){
+                saveTodo();
             }
-            $scope.clear = function(){
-                $scope.todoList.splice(0,$scope.todoList.length);
-                localStorage.clear();
+            $scope.editTodo =function(todo){
+                $scope.todoList.forEach((todo) => { todo.edit = false });
+                todo.edit = true
+            }
+            $scope.updateTodo =function(todo){
+                var text = todo.text.trim();
+                if (text) {
+                    saveTodo()
+                    todo.edit = false
+                }  
+            }
+            $scope.removeTodo = function(index) {
+                $scope.todoList.splice(index, 1);
+                saveTodo();
+            }
+            $scope.removeAll = function(){
+                $scope.todoList.splice(0, $scope.todoList.length);
+                saveTodo();
             }
             $scope.doneCount = function() {
-                var temp = $scope.todoList.filter(function(item) {
+                var dones = $scope.todoList.filter(function(item) {
                     return item.done;
                 })
-                return temp.length;
+                return dones.length;
             }
         }]);
 })(window)
