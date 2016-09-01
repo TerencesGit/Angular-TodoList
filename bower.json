@@ -1,0 +1,24 @@
+{
+  "name": "Angular-TodoList",
+  "homepage": "https://github.com/TransformGit/Angular-TodoList",
+  "authors": [
+    "transformGit <2630243397@qq.com>"
+  ],
+  "description": "angular-todolist",
+  "main": "",
+  "keywords": [
+    "angularjs"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "^1.5.8"
+  }
+}

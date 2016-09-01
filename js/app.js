@@ -1,5 +1,5 @@
 (function(window) {
-    var app = angular.module('TodoApp', []);
+    var app = angular.module('TodoApp', ['ngAnimate']);
     app.controller('mainController', ['$scope', function($scope) {
             var data = JSON.parse(localStorage.getItem('todos'));
             $scope.todoList = data || [];
