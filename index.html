@@ -27,7 +27,7 @@
 				</button>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" ng-model="item.done" ng-change="doneTodo(todo)">
+						<input type="checkbox" ng-model="item.done">
 					</label>
 					<span class="text" ng-bind="item.text"ng-dblclick="editTodo(item)" ng-hide="item.edit"></span>
 					<form ng-submit="updateTodo(item)">

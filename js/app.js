@@ -12,6 +12,9 @@
                 })
                 localStorage.setItem('todos',JSON.stringify(todos))    
             }
+            $scope.$watch('todoList',function(){
+                saveTodo()
+            },true)
             $scope.addTodo = function() {
                 var text = $scope.text.trim();
                 if (text) {
@@ -19,12 +22,8 @@
                         text: text,
                         done: false
                     })
-                    saveTodo()
                     $scope.text = ""
                 }
-            }
-            $scope.doneTodo =function(todo){
-                saveTodo()
             }
             $scope.editTodo =function(todo){
                 $scope.todoList.forEach(function(todo){ 
@@ -35,15 +34,12 @@
             $scope.updateTodo =function(todo){
                 var text = todo.text.trim();
                 if (text) {
-                    saveTodo()
                     todo.edit = false
                 }  
             }
             $scope.removeTodo = function(todo) {
                 var index = $scope.todoList.indexOf(todo);
                 $scope.todoList.splice(index, 1);
-                console.log(index)
-                saveTodo()
             }        
             $scope.removeDone = function() {
                 var doneList = $scope.todoList.filter(function(item) {
@@ -52,11 +48,9 @@
                 for(var i = 0;i < doneList.length; i++){
                     $scope.todoList.splice($scope.todoList.indexOf(doneList[i]), 1)
                 }
-                saveTodo()
             }
             $scope.removeAll = function(){
                 $scope.todoList.splice(0, $scope.todoList.length);
-                saveTodo()
             }
             $scope.doneCount = function() {
                 var dones = $scope.todoList.filter(function(item) {
