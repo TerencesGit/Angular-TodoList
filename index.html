@@ -16,7 +16,8 @@
 		<form ng-submit="addTodo()">
 			<input type="text" class="form-control newItem" ng-model="text" placeholder="What needs to be done?">
 		</form>
-		<ul class="list-group">
+		<ul class="list-group" ng-show="todoList.length">
+			<input type="checkbox" class="toggle-all" ng-model="allDone" ng-click="selectAll(allDone)">
 			<li class="list-group-item todo" 
 			ng-class="{'done':item.done}" ng-repeat="item in todoList" ng-cloak>			
 				<div class="checkbox" ng-hide="item.edit">

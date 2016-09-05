@@ -1,4 +1,4 @@
-(function(window) {
+(function(exports) {
     var app = angular.module('TodoApp', ['ngAnimate']);
     app.controller('mainController', ['$scope', function($scope) {
             var data = JSON.parse(localStorage.getItem('todos'));
@@ -14,6 +14,11 @@
             }
             $scope.$watch('todoList',function(){
                 saveTodo()
+                if($scope.todoList.length == $scope.doneCount()){
+                     $scope.allDone = true
+                }else {
+                    $scope.allDone = false
+                }
             },true)
             $scope.addTodo = function() {
                 var text = $scope.text.trim();
@@ -57,6 +62,11 @@
                     return item.done
                 })
                 return dones.length
+            }
+            $scope.selectAll = function(value){
+                $scope.todoList.forEach(function(item){
+                  item.done = value
+                })
             }
         }]);
 })(window)
