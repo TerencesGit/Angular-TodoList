@@ -2,46 +2,43 @@
 <html lang="en" ng-app="TodoApp">
 <head>
 	<meta charset="UTF-8">
-	<title>Angular - TodoList</title>
+	<title>AngularJS-TodoList</title>
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bower_components/angular/angular-csp.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body class="container" ng-controller="mainController">
 	<header>
-		<h1 class="display-4">任务列表<h1>
+		<h1 class="display-4">AngularJS-TodoList<h1>
 	</header>
-	<hr>
 	<section>
-		<form class="input-group input-group-lg">
-			<input type="text" class="form-control" ng-model="text" placeholder="Todo">
-			<span class="input-group-btn">
-				<button class="btn btn-secondary" ng-click="addTodo()">添加</button>
-			</span>
+		<form ng-submit="addTodo()">
+			<input type="text" class="form-control newItem" ng-model="text" placeholder="What needs to be done?">
 		</form>
-		<ul class="list-group m-y-2">
+		<ul class="list-group">
 			<li class="list-group-item todo" 
-			ng-class="{'done':item.done}" ng-repeat="item in todoList" ng-cloak>
-				<button class="close" aria-label="Close" ng-click="removeTodo(item)">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<div class="checkbox">
+			ng-class="{'done':item.done}" ng-repeat="item in todoList" ng-cloak>			
+				<div class="checkbox" ng-hide="item.edit">
 					<label>
 						<input type="checkbox" ng-model="item.done">
 					</label>
-					<span class="text" ng-bind="item.text"ng-dblclick="editTodo(item)" ng-hide="item.edit"></span>
-					<form ng-submit="updateTodo(item)">
-						<input type="text" class="form-control" ng-show=item.edit ng-model="item.text">
-					</form>
+					<span class="text" ng-bind="item.text"ng-dblclick="editTodo(item)"></span>
+					<button class="close" aria-label="Close" ng-click="removeTodo(item)">
+					<span aria-hidden="true">&times;</span>
+				</button>
 				</div>
+				<form ng-submit="updateTodo(item)">
+						<input type="text" class="form-control edit" ng-show=item.edit ng-model="item.text" ng-blur="updateTodo(item)">
+				</form>
+			</li>
+			<li class="list-group-item" ng-cloak>
+				共<strong>{{todoList.length}}</strong>个任务&nbsp;已完成<strong>{{doneCount()}}</strong> &nbsp;
+				<span>&nbsp;  &nbsp;  </span>       
+			  <a href="javascript:;" ng-click="removeDone()">清空已完成</a>&nbsp;  &nbsp;
+			  <a href="javascript:;" ng-click="removeAll()">清空所有任务</a>
 			</li>
 		</ul>
-		<p ng-cloak>
-			总共<strong>{{todoList.length}}</strong>个任务，已完成<strong>{{doneCount()}}</strong>个任务    &nbsp;       
-			<a href="javascript:;" ng-click="removeDone()">清空已完成</a>
-			<span>&nbsp;  &nbsp;  </span>
-			<a href="javascript:;" ng-click="removeAll()">清空所有任务</a>
-		</p>
 	</section>
 	<script src="bower_components/angular/angular.min.js"></script>
 	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
