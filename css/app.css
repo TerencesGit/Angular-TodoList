@@ -41,7 +41,10 @@
 	section {
 	    position: relative
 	}
-	
+	.list-group{
+      max-height: 450px;
+      overflow-y: auto
+   }
 	.toggle-all {
 	    position: absolute;
 	    top: 23px;
