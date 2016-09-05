@@ -3,7 +3,14 @@
 	    color: #4d4d4d;
 	    background: #ccc
 	}
-	
+	a {
+		float: right;
+		margin-left: 10px
+	}
+
+	a:link {
+	    text-decoration: none
+	}
 	h1 {
 	    margin: 30px 0;
 	    text-align: center;
@@ -50,9 +57,19 @@
 	.checkbox form {
 	    display: inline-block
 	}
-	
-	.checkbox span {
-	    margin-left: 1em
+	.checkbox input[type='checkbox'], .close {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto 0
+	}
+	.checkbox input[type='checkbox']{
+		left: 0
+	}
+	.checkbox .text {
+			display: inline-block;
+	    padding: 0 1em;
+	    word-break: break-all
 	}
 	
 	.list-group-item {
@@ -77,7 +94,9 @@
 	}
 	
 	.list-group-item:hover .close {
-	    display: block;
+			display: block;
+	    right: 0;
+	    outline: 0;
 	    opacity: .6
 	}
 	
@@ -87,10 +106,6 @@
 	
 	.edit {
 	    font-size: 20px
-	}
-	
-	a:link {
-	    text-decoration: none
 	}
 	
 	.todo {
